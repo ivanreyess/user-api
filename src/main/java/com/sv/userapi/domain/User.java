@@ -2,25 +2,34 @@ package com.sv.userapi.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 /**
- * A UserE.
+ * A User.
  */
 @Entity
 @Table(name = "users")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class User implements Serializable {
 
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
-    private Long id;
+    private UUID id;
 
     @Column(name = "name")
     private String name;
@@ -28,8 +37,8 @@ public class User implements Serializable {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "passowrd")
-    private String passowrd;
+    @Column(name = "password")
+    private String password;
 
     @Column(name = "active")
     private Boolean active;
@@ -40,74 +49,6 @@ public class User implements Serializable {
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
-    public Long getId() {
-        return this.id;
-    }
-
-    public User id(Long id) {
-        this.setId(id);
-        return this;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public User name(String name) {
-        this.setName(name);
-        return this;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return this.email;
-    }
-
-    public User email(String email) {
-        this.setEmail(email);
-        return this;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassowrd() {
-        return this.passowrd;
-    }
-
-    public User passowrd(String passowrd) {
-        this.setPassowrd(passowrd);
-        return this;
-    }
-
-    public void setPassowrd(String passowrd) {
-        this.passowrd = passowrd;
-    }
-
-    public Boolean getActive() {
-        return this.active;
-    }
-
-    public User active(Boolean active) {
-        this.setActive(active);
-        return this;
-    }
-
-    public void setActive(Boolean active) {
-        this.active = active;
-    }
-
-    public Set<Phone> getPhones() {
-        return this.phones;
-    }
 
     public void setPhones(Set<Phone> phones) {
         if (this.phones != null) {
@@ -162,7 +103,7 @@ public class User implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", email='" + getEmail() + "'" +
-            ", passowrd='" + getPassowrd() + "'" +
+            ", password='" + getPassword() + "'" +
             ", active='" + getActive() + "'" +
             "}";
     }
