@@ -5,6 +5,10 @@ import com.sv.userapi.domain.dto.UserDTO;
 import com.sv.userapi.repository.UserRepository;
 import com.sv.userapi.service.UserService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,9 +71,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<UserDTO> findAll() {
+    public Page<UserDTO> findAll(int pageNo, int pageSize, String sortBy, String sortDir) {
         log.debug("Request to get all UserS");
-        return userRepository.findAll().stream().map(User::toDto).collect(Collectors.toCollection(LinkedList::new));
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+        Page<User> userPage = userRepository.findAll(pageable);
+        return userPage.map(User::toDto);
     }
 
     @Override

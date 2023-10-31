@@ -1,8 +1,8 @@
 package com.sv.userapi.service;
 
 import com.sv.userapi.domain.dto.UserDTO;
+import org.springframework.data.domain.Page;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -11,7 +11,7 @@ import java.util.UUID;
  */
 public interface UserService {
     /**
-     * Save a userE.
+     * Save a user.
      *
      * @param userDTO the entity to save.
      * @return the persisted entity.
@@ -19,7 +19,7 @@ public interface UserService {
     UserDTO save(UserDTO userDTO);
 
     /**
-     * Updates a userE.
+     * Updates a user.
      *
      * @param userDTO the entity to update.
      * @return the persisted entity.
@@ -27,7 +27,7 @@ public interface UserService {
     UserDTO update(UserDTO userDTO);
 
     /**
-     * Partially updates a userE.
+     * Partially updates a user.
      *
      * @param userDto the entity to update partially.
      * @return the persisted entity.
@@ -35,14 +35,14 @@ public interface UserService {
     Optional<UserDTO> partialUpdate(UserDTO userDto);
 
     /**
-     * Get all the userES.
+     * Get all the user.
      *
      * @return the list of entities.
      */
-    List<UserDTO> findAll();
+    public Page<UserDTO> findAll(int pageNo, int pageSize, String sortBy, String sortDir);
 
     /**
-     * Get the "id" userE.
+     * Get the "id" user.
      *
      * @param id the id of the entity.
      * @return the entity.
@@ -50,7 +50,7 @@ public interface UserService {
     Optional<UserDTO> findOne(UUID id);
 
     /**
-     * Delete the "id" userE.
+     * Delete the "id" user.
      *
      * @param id the id of the entity.
      */
