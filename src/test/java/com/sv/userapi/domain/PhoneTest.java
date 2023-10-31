@@ -31,7 +31,6 @@ class PhoneTest {
                 .cityCode("1")
                 .number("60434343")
                 .build();
-
     }
 
     @Test
