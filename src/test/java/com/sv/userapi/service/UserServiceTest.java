@@ -11,12 +11,19 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.sv.userapi.config.AppConstants.*;
+import static com.sv.userapi.config.AppConstants.DEFAULT_SORT_DIRECTION;
 import static com.sv.userapi.domain.User.toEntity;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -32,7 +39,7 @@ class UserServiceTest {
     @Mock
     UserRepository userRepository;
     User user;
-    UserDTO userDTO;
+    UserDTO userDTO, userDTO1;
     String name = "Ivan Reyes", email = "ivan@mail.com", password ="123", countryCode = "506", cityCode = "1", number = "60434343";
     boolean active = true;
 
@@ -69,6 +76,15 @@ class UserServiceTest {
                 .isActive(active)
                 .build();
 
+        userDTO1 = UserDTO.builder()
+                .id(uuid)
+                .name(name)
+                .email(email)
+                .password(password)
+                .phones(phones)
+                .isActive(active)
+                .build();
+
     }
 
     @Test
@@ -97,10 +113,19 @@ class UserServiceTest {
 
     @Test
     void findAll() {
+        List<User> users = Stream.of(userDTO, userDTO1).map(User::toEntity).toList();
+        Page<User> userPage = new PageImpl<>(users);
+        given(userRepository.findAll(any(Pageable.class))).willReturn(userPage);
+        Page<UserDTO> result = userService.findAll(Integer.parseInt(DEFAULT_PAGE_NUMBER), Integer.parseInt(DEFAULT_PAGE_SIZE),DEFAULT_SORT_BY, DEFAULT_SORT_DIRECTION);
+        assertFalse(result.isEmpty());
     }
 
     @Test
     void findOne() {
+        User user = toEntity(userDTO);
+        given(userRepository.findById(uuid)).willReturn(Optional.of(user));
+        Optional<UserDTO> result = userService.findOne(uuid);
+        assertTrue(result.isPresent());
     }
 
     @Test
