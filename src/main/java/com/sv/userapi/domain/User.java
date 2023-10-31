@@ -83,6 +83,7 @@ public class User implements Serializable {
                 .password(user.getPassword())
                 .name(user.getName())
                 .isActive(user.getActive())
+                .phones(user.getPhones())
                 .build();
     }
 
@@ -116,7 +117,7 @@ public class User implements Serializable {
     // prettier-ignore
     @Override
     public String toString() {
-        return "UserE{" +
+        return "User {" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", email='" + getEmail() + "'" +

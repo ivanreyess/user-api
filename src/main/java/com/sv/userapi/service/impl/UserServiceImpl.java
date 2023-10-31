@@ -52,12 +52,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public Optional<UserDTO> partialUpdate(UserDTO userDTO) {
         log.debug("Request to partially update User : {}", userDTO);
-
         return userRepository
             .findById(userDTO.id())
             .map(existingUser -> {
-//                UserMapper.partialUpdate(existingUser, UserDTO);
-
+                if (userDTO.name() != null) existingUser.setName(userDTO.name());
+                if (userDTO.email() != null) existingUser.setEmail(userDTO.email());
+                if (userDTO.password() != null) existingUser.setPassword(userDTO.name());
+                if (userDTO.isActive() != null) existingUser.setActive(userDTO.isActive());
                 return existingUser;
             })
             .map(userRepository::save)

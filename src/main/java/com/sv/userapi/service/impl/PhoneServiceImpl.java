@@ -51,12 +51,12 @@ public class PhoneServiceImpl implements PhoneService {
     @Override
     public Optional<PhoneDTO> partialUpdate(PhoneDTO phoneDTO) {
         log.debug("Request to partially update Phone : {}", phoneDTO);
-
         return phoneRepository
             .findById(phoneDTO.id())
             .map(existingPhone -> {
-//                phoneMapper.partialUpdate(existingPhone, phoneDTO);
-
+                if (phoneDTO.countryCode() != null)existingPhone.setCountryCode(phoneDTO.countryCode());
+                if (phoneDTO.cityCode() != null)existingPhone.setCityCode(phoneDTO.cityCode());
+                if (phoneDTO.number() != null)existingPhone.setNumber(phoneDTO.number());
                 return existingPhone;
             })
             .map(phoneRepository::save)
