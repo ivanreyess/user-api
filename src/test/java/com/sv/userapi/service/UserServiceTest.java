@@ -24,6 +24,7 @@ import java.util.stream.Stream;
 
 import static com.sv.userapi.config.AppConstants.*;
 import static com.sv.userapi.config.AppConstants.DEFAULT_SORT_DIRECTION;
+import static com.sv.userapi.domain.User.toDto;
 import static com.sv.userapi.domain.User.toEntity;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
