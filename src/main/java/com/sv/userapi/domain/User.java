@@ -77,11 +77,23 @@ public class User implements Serializable {
     }
 
     public static UserDTO toDto(User user) {
-        return UserDTO.builder().build();
+        return UserDTO.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .password(user.getPassword())
+                .name(user.getName())
+                .isActive(user.getActive())
+                .build();
     }
 
     public static User toEntity(UserDTO userDTO) {
-        return User.builder().build();
+        return User.builder()
+                .id(userDTO.id())
+                .email(userDTO.email())
+                .password(userDTO.password())
+                .name(userDTO.name())
+                .active(userDTO.isActive())
+                .build();
     }
 
     @Override
