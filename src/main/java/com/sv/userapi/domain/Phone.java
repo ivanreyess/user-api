@@ -1,11 +1,9 @@
 package com.sv.userapi.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sv.userapi.domain.dto.PhoneDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -18,6 +16,7 @@ import java.util.UUID;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @Table(name = "phone")
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class Phone implements Serializable {
@@ -41,6 +40,24 @@ public class Phone implements Serializable {
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "phones" }, allowSetters = true)
     private User user;
+
+    public static PhoneDTO toDto(Phone phone){
+        return PhoneDTO.builder()
+                .id(phone.getId())
+                .cityCode(phone.getCityCode())
+                .number(phone.getNumber())
+                .countryCode(phone.getCountryCode())
+                .build();
+    }
+
+    public static Phone toEntity(PhoneDTO phoneDTO){
+        return Phone.builder()
+                .id(phoneDTO.id())
+                .number(phoneDTO.number())
+                .cityCode(phoneDTO.cityCode())
+                .countryCode(phoneDTO.countryCode())
+                .build();
+    }
 
     @Override
     public boolean equals(Object o) {

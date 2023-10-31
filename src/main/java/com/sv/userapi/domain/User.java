@@ -1,11 +1,9 @@
 package com.sv.userapi.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sv.userapi.domain.dto.UserDTO;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -21,6 +19,7 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class User implements Serializable {
 
@@ -77,7 +76,13 @@ public class User implements Serializable {
         return this;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    public static UserDTO toDto(User user) {
+        return UserDTO.builder().build();
+    }
+
+    public static User toEntity(UserDTO userDTO) {
+        return User.builder().build();
+    }
 
     @Override
     public boolean equals(Object o) {
