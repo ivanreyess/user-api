@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sv.userapi.domain.dto.PhoneDTO;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 import java.util.UUID;
@@ -18,6 +21,7 @@ import java.util.UUID;
 @NoArgsConstructor
 @Builder
 @Table(name = "phone")
+@EntityListeners(AuditingEntityListener.class)
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class Phone implements Serializable {
 
@@ -36,6 +40,14 @@ public class Phone implements Serializable {
 
     @Column(name = "country_code")
     private String countryCode;
+
+    @Column(name = "created_date", nullable = false, updatable = false)
+    @CreatedDate
+    private long createdDate;
+
+    @Column(name = "modified_date")
+    @LastModifiedDate
+    private long modifiedDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnoreProperties(value = { "phones" }, allowSetters = true)

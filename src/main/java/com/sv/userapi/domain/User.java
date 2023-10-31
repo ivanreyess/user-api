@@ -4,6 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sv.userapi.domain.dto.UserDTO;
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 import java.util.HashSet;
@@ -20,6 +23,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
+@EntityListeners(AuditingEntityListener.class)
 @SuppressWarnings("common-java:DuplicatedBlocks")
 public class User implements Serializable {
 
@@ -41,6 +45,14 @@ public class User implements Serializable {
 
     @Column(name = "active")
     private Boolean active;
+
+    @Column(name = "created_date", nullable = false, updatable = false)
+    @CreatedDate
+    private long createdDate;
+
+    @Column(name = "modified_date")
+    @LastModifiedDate
+    private long modifiedDate;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "userE")
     @JsonIgnoreProperties(value = { "userE" }, allowSetters = true)
