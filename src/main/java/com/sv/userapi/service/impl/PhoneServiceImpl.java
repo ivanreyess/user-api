@@ -5,16 +5,15 @@ import com.sv.userapi.repository.PhoneRepository;
 import com.sv.userapi.service.PhoneService;
 import com.sv.userapi.domain.dto.PhoneDTO;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static com.sv.userapi.domain.Phone.toDto;
 import static com.sv.userapi.domain.Phone.toEntity;
@@ -26,7 +25,6 @@ import static com.sv.userapi.domain.Phone.toEntity;
 @Transactional
 @Slf4j
 public class PhoneServiceImpl implements PhoneService {
-
 
     private final PhoneRepository phoneRepository;
 
@@ -67,9 +65,13 @@ public class PhoneServiceImpl implements PhoneService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<PhoneDTO> findAll() {
+    public Page<PhoneDTO> findAll(int pageNo, int pageSize, String sortBy, String sortDir) {
         log.debug("Request to get all Phones");
-        return phoneRepository.findAll().stream().map(Phone::toDto).collect(Collectors.toCollection(LinkedList::new));
+        Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending()
+                : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(pageNo, pageSize, sort);
+        Page<Phone> result = phoneRepository.findAll(pageable);
+        return result.map(Phone::toDto);
     }
 
     @Override

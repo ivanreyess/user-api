@@ -1,8 +1,8 @@
 package com.sv.userapi.service;
 
 import com.sv.userapi.domain.dto.PhoneDTO;
+import org.springframework.data.domain.Page;
 
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -39,7 +39,7 @@ public interface PhoneService {
      *
      * @return the list of entities.
      */
-    List<PhoneDTO> findAll();
+    Page<PhoneDTO> findAll(int pageNo, int pageSize, String sortBy, String sortDir);
 
     /**
      * Get the "id" phone.
