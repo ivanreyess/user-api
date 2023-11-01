@@ -3,6 +3,7 @@ package com.sv.userapi.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sv.userapi.domain.dto.UserDTO;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -12,6 +13,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 /**
  * A User.
@@ -38,6 +40,7 @@ public class User implements Serializable {
     private String name;
 
     @Column(name = "email")
+    @Email
     private String email;
 
     @Column(name = "password")
@@ -95,7 +98,7 @@ public class User implements Serializable {
                 .password(user.getPassword())
                 .name(user.getName())
                 .isActive(user.getActive())
-                .phones(user.getPhones())
+                .phones(user.getPhones().stream().map(Phone::toDto).collect(Collectors.toSet()))
                 .build();
     }
 
@@ -106,6 +109,7 @@ public class User implements Serializable {
                 .password(userDTO.password())
                 .name(userDTO.name())
                 .active(userDTO.isActive())
+                .phones(userDTO.phones().stream().map(Phone::toEntity).collect(Collectors.toSet()))
                 .build();
     }
 

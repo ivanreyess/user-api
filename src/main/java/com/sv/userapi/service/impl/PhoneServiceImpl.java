@@ -1,6 +1,7 @@
 package com.sv.userapi.service.impl;
 
 import com.sv.userapi.domain.Phone;
+import com.sv.userapi.domain.User;
 import com.sv.userapi.repository.PhoneRepository;
 import com.sv.userapi.service.PhoneService;
 import com.sv.userapi.domain.dto.PhoneDTO;
@@ -12,7 +13,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 
 import static com.sv.userapi.domain.Phone.toDto;
@@ -40,6 +43,14 @@ public class PhoneServiceImpl implements PhoneService {
         return toDto(phone);
     }
 
+    @Override
+    public List<PhoneDTO> savePhones(Set<PhoneDTO> phoneDTOS, User user) {
+        phoneDTOS.stream().map(Phone::toEntity).forEach(phone -> {
+            phone.setUser(user);
+            phoneRepository.save(phone);
+        });
+        return this.findByUser(user);
+    }
     @Override
     public PhoneDTO update(PhoneDTO phoneDTO) {
         log.debug("Request to update Phone : {}", phoneDTO);
@@ -73,6 +84,12 @@ public class PhoneServiceImpl implements PhoneService {
         Page<Phone> result = phoneRepository.findAll(pageable);
         return result.map(Phone::toDto);
     }
+
+    @Override
+    public List<PhoneDTO> findByUser(User user) {
+        return phoneRepository.getPhoneByUser(user).stream().map(Phone::toDto).toList();
+    }
+
 
     @Override
     @Transactional(readOnly = true)

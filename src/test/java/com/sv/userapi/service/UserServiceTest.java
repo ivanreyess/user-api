@@ -73,7 +73,7 @@ class UserServiceTest {
                 .name(name)
                 .email(email)
                 .password(password)
-                .phones(phones)
+                .phones(phones.stream().map(Phone::toDto).collect(Collectors.toSet()))
                 .isActive(active)
                 .build();
 
@@ -82,7 +82,7 @@ class UserServiceTest {
                 .name(name)
                 .email(email)
                 .password(password)
-                .phones(phones)
+                .phones(phones.stream().map(Phone::toDto).collect(Collectors.toSet()))
                 .isActive(active)
                 .build();
 

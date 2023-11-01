@@ -1,8 +1,11 @@
 package com.sv.userapi.service.impl;
 
+import com.sv.userapi.domain.Phone;
 import com.sv.userapi.domain.User;
+import com.sv.userapi.domain.dto.PhoneDTO;
 import com.sv.userapi.domain.dto.UserDTO;
 import com.sv.userapi.repository.UserRepository;
+import com.sv.userapi.service.PhoneService;
 import com.sv.userapi.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -12,8 +15,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 import static com.sv.userapi.domain.User.toDto;
 import static com.sv.userapi.domain.User.toEntity;
@@ -28,17 +33,21 @@ public class UserServiceImpl implements UserService {
 
 
     private final UserRepository userRepository;
+    private final PhoneService phoneService;
 
-
-    public UserServiceImpl(UserRepository userRepository) {
+    public UserServiceImpl(UserRepository userRepository, PhoneService phoneService) {
         this.userRepository = userRepository;
+        this.phoneService = phoneService;
     }
 
     @Override
     public UserDTO save(UserDTO userDTO) {
         log.debug("Request to save User : {}", userDTO);
         User user = toEntity(userDTO);
+        user.setActive(true);
         user = userRepository.save(user);
+        List<PhoneDTO> savedPhones = phoneService.savePhones(userDTO.phones(), user);
+        user.setPhones(savedPhones.stream().map(Phone::toEntity).collect(Collectors.toSet()));
         return toDto(user);
     }
 

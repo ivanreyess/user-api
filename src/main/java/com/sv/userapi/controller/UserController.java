@@ -6,8 +6,6 @@ import com.sv.userapi.domain.dto.UserDTO;
 import com.sv.userapi.util.HeaderUtil;
 import com.sv.userapi.util.ResponseUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
