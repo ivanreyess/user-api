@@ -6,6 +6,7 @@ import com.sv.userapi.domain.dto.UserDTO;
 import com.sv.userapi.util.HeaderUtil;
 import com.sv.userapi.util.ResponseUtil;
 import com.sv.userapi.util.exception.BadRequest;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -52,10 +53,10 @@ public class UserController {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/users")
-    public ResponseEntity<UserDTO> createUser(@RequestBody UserDTO userDTO) throws URISyntaxException {
+    public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO) throws URISyntaxException {
         log.debug("REST request to save User : {}", userDTO);
         if (userDTO.id() != null) {
-            return ResponseEntity.badRequest().build();
+            throw new BadRequest("A new user cannot already have an ID", applicationName);
         }
         UserDTO result = userService.save(userDTO);
         return ResponseEntity
