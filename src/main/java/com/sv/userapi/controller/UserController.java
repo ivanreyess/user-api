@@ -5,6 +5,7 @@ import com.sv.userapi.service.UserService;
 import com.sv.userapi.domain.dto.UserDTO;
 import com.sv.userapi.util.HeaderUtil;
 import com.sv.userapi.util.ResponseUtil;
+import com.sv.userapi.util.exception.BadRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;

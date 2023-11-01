@@ -1,8 +1,8 @@
 package com.sv.userapi.controller;
 
-import com.sv.userapi.repository.PhoneRepository;
 import com.sv.userapi.service.PhoneService;
 import com.sv.userapi.domain.dto.PhoneDTO;
+import com.sv.userapi.util.exception.BadRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -49,7 +49,7 @@ public class PhoneController {
     public ResponseEntity<PhoneDTO> createPhone(@RequestBody PhoneDTO phoneDTO) throws URISyntaxException {
         log.debug("REST request to save Phone : {}", phoneDTO);
         if (phoneDTO.id() != null) {
-            return ResponseEntity.badRequest().build();
+            throw new BadRequest("A new phone cannot already have an ID", applicationName);
         }
         PhoneDTO result = phoneService.save(phoneDTO);
         return ResponseEntity
@@ -74,14 +74,14 @@ public class PhoneController {
     ) throws URISyntaxException {
         log.debug("REST request to update Phone : {}, {}", id, phoneDTO);
         if (phoneDTO.id() == null) {
-            return ResponseEntity.badRequest().build();
+            throw new BadRequest("Invalid id: id null", ENTITY_NAME);
         }
         if (!Objects.equals(id, phoneDTO.id())) {
-            return ResponseEntity.badRequest().build();
+            throw new BadRequest("Invalid id: id does no match", ENTITY_NAME);
         }
 
         if (!phoneService.exists(id)) {
-            return ResponseEntity.badRequest().build();
+            throw new BadRequest("Entity not found", ENTITY_NAME);
         }
 
         PhoneDTO result = phoneService.update(phoneDTO);
@@ -108,14 +108,14 @@ public class PhoneController {
     ) throws URISyntaxException {
         log.debug("REST request to partial update Phone partially : {}, {}", id, phoneDTO);
         if (phoneDTO.id() == null) {
-            return ResponseEntity.badRequest().build();
+            throw new BadRequest("Invalid id: id null", ENTITY_NAME);
         }
         if (!Objects.equals(id, phoneDTO.id())) {
-            return ResponseEntity.badRequest().build();
+            throw new BadRequest("Invalid id: id does no match", ENTITY_NAME);
         }
 
         if (!phoneService.exists(id)) {
-            return ResponseEntity.badRequest().build();
+            throw new BadRequest("Entity not found", ENTITY_NAME);
         }
 
         Optional<PhoneDTO> result = phoneService.partialUpdate(phoneDTO);
