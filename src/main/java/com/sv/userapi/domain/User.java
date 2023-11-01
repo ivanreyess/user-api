@@ -2,6 +2,7 @@ package com.sv.userapi.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sv.userapi.domain.dto.UserDTO;
+import com.sv.userapi.domain.validation.Password;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;
@@ -44,6 +45,7 @@ public class User implements Serializable {
     private String email;
 
     @Column(name = "password")
+    @Password
     private String password;
 
     @Column(name = "active")
