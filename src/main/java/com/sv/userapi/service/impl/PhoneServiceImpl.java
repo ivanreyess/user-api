@@ -86,4 +86,9 @@ public class PhoneServiceImpl implements PhoneService {
         log.debug("Request to delete Phone : {}", id);
         phoneRepository.deleteById(id);
     }
+
+    @Override
+    public boolean exists(UUID id) {
+        return phoneRepository.existsById(id);
+    }
 }

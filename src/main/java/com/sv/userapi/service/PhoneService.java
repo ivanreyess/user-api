@@ -55,4 +55,6 @@ public interface PhoneService {
      * @param id the id of the entity.
      */
     void delete(UUID id);
+
+    boolean exists(UUID id);
 }

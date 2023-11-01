@@ -31,7 +31,7 @@ public class User implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(name = "id")
+    @Column(name = "id", columnDefinition = "uuid")
     private UUID id;
 
     @Column(name = "name")
@@ -54,8 +54,8 @@ public class User implements Serializable {
     @LastModifiedDate
     private long modifiedDate;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "userE")
-    @JsonIgnoreProperties(value = { "userE" }, allowSetters = true)
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    @JsonIgnoreProperties(value = { "user" }, allowSetters = true)
     private Set<Phone> phones = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
