@@ -12,11 +12,8 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 import static com.sv.userapi.domain.User.toDto;
 import static com.sv.userapi.domain.User.toEntity;
@@ -91,5 +88,10 @@ public class UserServiceImpl implements UserService {
     public void delete(UUID id) {
         log.debug("Request to delete user : {}", id);
         userRepository.deleteById(id);
+    }
+
+    @Override
+    public boolean exists(UUID id) {
+        return userRepository.existsById(id);
     }
 }

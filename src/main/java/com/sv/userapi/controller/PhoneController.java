@@ -34,11 +34,8 @@ public class PhoneController {
 
     private final PhoneService phoneService;
 
-    private final PhoneRepository phoneRepository;
-
-    public PhoneController(PhoneService phoneService, PhoneRepository phoneRepository) {
+    public PhoneController(PhoneService phoneService) {
         this.phoneService = phoneService;
-        this.phoneRepository = phoneRepository;
     }
 
     /**
