@@ -55,10 +55,6 @@ To execute the desired script you can copy and paste on your terminal.
 
 ### Consuming APIs :star:
 
-* Main entry point is on http://localhost:8090/
-* All microservices are protected except for products on http://localhost:8090/api/products
-* Order details entry point: http://localhost:8090/api/order-details
-* Order entry point: http://localhost:8090/api/orders
-* Payment details entry point: http://localhost:8090/api/payments
-* User entrypoint: http://localhost:8090/api/users/
+* Swagger doc: http://localhost:8080/swagger-ui/index.html
+* User entrypoint: http://localhost:8080/api/users/
 
