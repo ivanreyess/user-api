@@ -1,4 +1,4 @@
-package com.sv.userapi.controller;
+package com.sv.userapi.controller.v1;
 
 import com.sv.userapi.repository.UserRepository;
 import com.sv.userapi.service.UserService;
@@ -6,6 +6,7 @@ import com.sv.userapi.domain.dto.UserDTO;
 import com.sv.userapi.util.HeaderUtil;
 import com.sv.userapi.util.ResponseUtil;
 import com.sv.userapi.util.exception.BadRequest;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,7 +28,8 @@ import static com.sv.userapi.config.AppConstants.DEFAULT_SORT_DIRECTION;
  * REST controller for managing {@link com.sv.userapi.domain.User}.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
+@Tag(name = "User", description = "resource for user service")
 @Slf4j
 public class UserController {
 

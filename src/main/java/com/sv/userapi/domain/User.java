@@ -51,6 +51,9 @@ public class User implements Serializable {
     @Column(name = "active")
     private Boolean active;
 
+    @Column(name = "token")
+    private String token;
+
     @Column(name = "created_date", nullable = false, updatable = false)
     @CreatedDate
     private long createdDate;

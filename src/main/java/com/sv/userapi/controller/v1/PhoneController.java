@@ -1,4 +1,4 @@
-package com.sv.userapi.controller;
+package com.sv.userapi.controller.v1;
 
 import com.sv.userapi.service.PhoneService;
 import com.sv.userapi.domain.dto.PhoneDTO;
@@ -23,7 +23,7 @@ import static com.sv.userapi.config.AppConstants.*;
  * REST controller for managing {@link com.sv.userapi.domain.Phone}.
  */
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/v1")
 @Slf4j
 public class PhoneController {
 

@@ -7,3 +7,6 @@ spring:
     properties:
       hibernate:
         show_sql: true
+app:
+  password:
+    pattern: "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$"
