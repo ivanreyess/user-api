@@ -1,0 +1,12 @@
+version: '3.7'
+services:
+  user-service:
+    build: .
+    image: user-service:v1
+    ports:
+      - "8080:8080"
+    restart: always   
+    networks:
+      - springapp
+networks:
+  springapp:
