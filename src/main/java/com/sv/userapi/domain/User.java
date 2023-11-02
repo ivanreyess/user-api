@@ -59,7 +59,7 @@ public class User implements Serializable {
     private long createdDate;
 
     @Column(name = "last_login", nullable = false)
-    @LastModifiedDate
+    @CreatedDate
     private long lastLogin;
 
     @Column(name = "modified_date")

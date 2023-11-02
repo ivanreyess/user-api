@@ -50,7 +50,6 @@ public class UserServiceImpl implements UserService {
         user.setActive(true);
         user.setToken(UUID.randomUUID().toString());
         user = userRepository.save(user);
-        user.setLastLogin(user.getCreatedDate());
         if (!userDTO.phones().isEmpty()) {
             List<PhoneDTO> savedPhones = phoneService.savePhones(userDTO.phones(), user);
             user.setPhones(savedPhones.stream().map(Phone::toEntity).collect(Collectors.toSet()));
