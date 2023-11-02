@@ -62,7 +62,6 @@ public class UserServiceImpl implements UserService {
     public UserDTO update(UserDTO userDTO) {
         log.debug("Request to update User : {}", userDTO);
         User user = toEntity(userDTO);
-        user.setLastLogin(Instant.now().toEpochMilli());
         user = userRepository.save(user);
         return toDto(user);
     }
@@ -110,5 +109,23 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean exists(UUID id) {
         return userRepository.existsById(id);
+    }
+
+    @Override
+    public Optional<UserDTO> findByEmailAndPassword(String email, String password) {
+        return userRepository.findByEmailAndPassword(email, password).map(User::toDto);
+    }
+
+    public String login (String email, String password) {
+        String login;
+        Optional<UserDTO> userDTO = userRepository.findByEmailAndPassword(email, password).map(User::toDto);
+        if (userDTO.isPresent()) {
+            User user = toEntity( userDTO.get());
+            user.setLastLogin(Instant.now().toEpochMilli());
+            login = "logged in";
+            this.update(toDto(user));
+        }
+        else login = "login failed";
+        return login;
     }
 }

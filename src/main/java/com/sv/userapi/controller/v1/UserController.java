@@ -5,6 +5,7 @@ import com.sv.userapi.domain.dto.UserDTO;
 import com.sv.userapi.util.HeaderUtil;
 import com.sv.userapi.util.ResponseUtil;
 import com.sv.userapi.util.exception.BadRequest;
+import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
@@ -28,7 +29,7 @@ import static com.sv.userapi.config.AppConstants.DEFAULT_SORT_DIRECTION;
  */
 @RestController
 @RequestMapping("/api/v1")
-@Tag(name = "User", description = "resource for user service")
+@Tag(name = "User", description = "resource for managing user entity")
 @Slf4j
 public class UserController {
 
@@ -51,6 +52,7 @@ public class UserController {
      * @return the {@link ResponseEntity} with status {@code 201 (Created)} and with body the new userDTO, or with status {@code 400 (Bad Request)} if the user has already an ID.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @Operation(summary = "Create a new user")
     @PostMapping("/users")
     public ResponseEntity<UserDTO> createUser(@Valid @RequestBody UserDTO userDTO) throws URISyntaxException {
         log.debug("REST request to save User : {}", userDTO);
@@ -74,6 +76,7 @@ public class UserController {
      * or with status {@code 500 (Internal Server Error)} if the userDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @Operation(summary = "Update an existing user")
     @PutMapping("/users/{id}")
     public ResponseEntity<UserDTO> updateUser(
         @PathVariable(value = "id", required = false) final UUID id,
@@ -109,6 +112,7 @@ public class UserController {
      * or with status {@code 500 (Internal Server Error)} if the userDTO couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
+    @Operation(summary = "Update an existing user")
     @PatchMapping(value = "/users/{id}", consumes = { "application/json", "application/merge-patch+json" })
     public ResponseEntity<UserDTO> partialUpdateUser(
         @PathVariable(value = "id", required = false) final UUID id,
@@ -135,10 +139,11 @@ public class UserController {
     }
 
     /**
-     * {@code GET  /users} : get all the userS.
+     * {@code GET  /users} : get all the users.
      *
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of userS in body.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of users in body.
      */
+    @Operation(summary = "Get all users")
     @GetMapping("/users")
     public ResponseEntity<List<UserDTO>> getAllUsers(@RequestParam(value = "pageNo", defaultValue = DEFAULT_PAGE_NUMBER, required = false) int pageNo,
                                      @RequestParam(value = "pageSize", defaultValue = DEFAULT_PAGE_SIZE, required = false) int pageSize,
@@ -155,6 +160,7 @@ public class UserController {
      * @param id the id of the userDTO to retrieve.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the userDTO, or with status {@code 404 (Not Found)}.
      */
+    @Operation(summary = "Gets a specific user by id")
     @GetMapping("/users/{id}")
     public ResponseEntity<UserDTO> getUser(@PathVariable UUID id) {
         log.debug("REST request to get User : {}", id);
@@ -168,6 +174,7 @@ public class UserController {
      * @param id the id of the userDTO to delete.
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
+    @Operation(summary = "Delete user by id")
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Void> deleteUser(@PathVariable UUID id) {
         log.debug("REST request to delete User : {}", id);

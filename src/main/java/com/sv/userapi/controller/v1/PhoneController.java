@@ -3,6 +3,8 @@ package com.sv.userapi.controller.v1;
 import com.sv.userapi.service.PhoneService;
 import com.sv.userapi.domain.dto.PhoneDTO;
 import com.sv.userapi.util.exception.BadRequest;
+import io.swagger.v3.oas.annotations.Hidden;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -24,6 +26,7 @@ import static com.sv.userapi.config.AppConstants.*;
  */
 @RestController
 @RequestMapping("/api/v1")
+@Tag(name = "Phone", description = "resource for managing phone entity")
 @Slf4j
 public class PhoneController {
 

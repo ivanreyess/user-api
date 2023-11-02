@@ -57,4 +57,8 @@ public interface UserService {
     void delete(UUID id);
 
     boolean exists(UUID id);
+
+    Optional<UserDTO> findByEmailAndPassword(String email, String password);
+
+    String login (String email, String password);
 }
