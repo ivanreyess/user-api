@@ -84,14 +84,14 @@ public class UserController {
     ) throws URISyntaxException {
         log.debug("REST request to update User : {}, {}", id, userDTO);
         if (userDTO.id() == null) {
-            return ResponseEntity.badRequest().build();
+            throw new BadRequest("Invalid id: id null", ENTITY_NAME);
         }
         if (!Objects.equals(id, userDTO.id())) {
-            return ResponseEntity.badRequest().build();
+            throw new BadRequest("Invalid id: id does no match", ENTITY_NAME);
         }
 
-        if (!userRepository.existsById(id)) {
-            return ResponseEntity.badRequest().build();
+        if (!userService.exists(id)) {
+            throw new BadRequest("Entity not found", ENTITY_NAME);
         }
 
         UserDTO result = userService.update(userDTO);
@@ -119,14 +119,14 @@ public class UserController {
     ) throws URISyntaxException {
         log.debug("REST request to partial update User partially : {}, {}", id, userDTO);
         if (userDTO.id() == null) {
-            return ResponseEntity.badRequest().build();
+            throw new BadRequest("Invalid id: id null", ENTITY_NAME);
         }
         if (!Objects.equals(id, userDTO.id())) {
-            return ResponseEntity.badRequest().build();
+            throw new BadRequest("Invalid id: id does no match", ENTITY_NAME);
         }
 
         if (!userService.exists(id)) {
-            return ResponseEntity.badRequest().build();
+            throw new BadRequest("Entity not found", ENTITY_NAME);
         }
 
         Optional<UserDTO> result = userService.partialUpdate(userDTO);

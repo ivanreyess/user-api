@@ -46,7 +46,7 @@ class PhoneControllerTest {
     private static final String DEFAULT_COUNTRY_CODE = "AAAAAAAAAA";
     private static final String UPDATED_COUNTRY_CODE = "BBBBBBBBBB";
 
-    private static final String ENTITY_API_URL = "/api/phones";
+    private static final String ENTITY_API_URL = "/api/v1/phones";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
 
     private static Random random = new Random();

@@ -32,6 +32,7 @@ class UserTest {
                 .id(uuid)
                 .email("ivan@mail.com")
                 .password("password")
+                .phones(new HashSet<>())
                 .isActive(true)
                 .build();
     }

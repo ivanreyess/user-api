@@ -17,6 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -46,15 +47,18 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserDTO save(UserDTO userDTO) {
         log.debug("Request to save User : {}", userDTO);
         User user = toEntity(userDTO);
         user.setActive(true);
         user.setToken(UUID.randomUUID().toString());
-        user.setPassword(passwordEncoder.encode(userDTO.password()));
         user = userRepository.save(user);
-        List<PhoneDTO> savedPhones = phoneService.savePhones(userDTO.phones(), user);
-        user.setPhones(savedPhones.stream().map(Phone::toEntity).collect(Collectors.toSet()));
+        user.setLastLogin(user.getCreatedDate());
+        if (!userDTO.phones().isEmpty()) {
+            List<PhoneDTO> savedPhones = phoneService.savePhones(userDTO.phones(), user);
+            user.setPhones(savedPhones.stream().map(Phone::toEntity).collect(Collectors.toSet()));
+        }
         return toDto(user);
     }
 
@@ -62,6 +66,7 @@ public class UserServiceImpl implements UserService {
     public UserDTO update(UserDTO userDTO) {
         log.debug("Request to update User : {}", userDTO);
         User user = toEntity(userDTO);
+        user.setLastLogin(Instant.now().toEpochMilli());
         user = userRepository.save(user);
         return toDto(user);
     }

@@ -58,6 +58,10 @@ public class User implements Serializable {
     @CreatedDate
     private long createdDate;
 
+    @Column(name = "last_login", nullable = false)
+    @LastModifiedDate
+    private long lastLogin;
+
     @Column(name = "modified_date")
     @LastModifiedDate
     private long modifiedDate;
@@ -104,6 +108,9 @@ public class User implements Serializable {
                 .name(user.getName())
                 .isActive(user.getActive())
                 .phones(user.getPhones().stream().map(Phone::toDto).collect(Collectors.toSet()))
+                .token(user.getToken())
+                .lastLogin(user.getLastLogin())
+                .createdDate(user.createdDate)
                 .build();
     }
 
@@ -115,6 +122,8 @@ public class User implements Serializable {
                 .name(userDTO.name())
                 .active(userDTO.isActive())
                 .phones(userDTO.phones().stream().map(Phone::toEntity).collect(Collectors.toSet()))
+                .token(userDTO.token())
+                .lastLogin(userDTO.lastLogin())
                 .build();
     }
 

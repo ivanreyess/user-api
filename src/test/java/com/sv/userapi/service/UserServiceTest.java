@@ -39,6 +39,8 @@ class UserServiceTest {
     UserServiceImpl userService;
     @Mock
     UserRepository userRepository;
+    @Mock
+    PhoneService phoneService;
     User user;
     UserDTO userDTO, userDTO1;
     String name = "Ivan Reyes", email = "ivan@mail.com", password ="123", countryCode = "506", cityCode = "1", number = "60434343";
@@ -92,6 +94,7 @@ class UserServiceTest {
     void save() {
         User savedUser = toEntity(userDTO);
         given(userRepository.save(any(User.class))).willReturn(savedUser);
+        given(phoneService.savePhones(any(), any())).willReturn(phones.stream().map(Phone::toDto).toList());
         UserDTO result = userService.save(userDTO);
         assertEquals(uuid, result.id());
         assertEquals(name, result.name());
