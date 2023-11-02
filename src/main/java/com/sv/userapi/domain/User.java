@@ -2,7 +2,7 @@ package com.sv.userapi.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.sv.userapi.domain.dto.UserDTO;
-import com.sv.userapi.domain.validation.Password;
+import com.sv.userapi.validation.Password;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import lombok.*;

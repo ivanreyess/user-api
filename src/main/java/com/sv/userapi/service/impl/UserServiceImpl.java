@@ -7,13 +7,11 @@ import com.sv.userapi.domain.dto.UserDTO;
 import com.sv.userapi.repository.UserRepository;
 import com.sv.userapi.service.PhoneService;
 import com.sv.userapi.service.UserService;
-import jakarta.validation.Validator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -38,12 +36,10 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PhoneService phoneService;
 
-    private final PasswordEncoder passwordEncoder;
-
-    public UserServiceImpl(UserRepository userRepository, PhoneService phoneService, PasswordEncoder passwordEncoder) {
+    public UserServiceImpl(UserRepository userRepository, PhoneService phoneService) {
         this.userRepository = userRepository;
         this.phoneService = phoneService;
-        this.passwordEncoder = passwordEncoder;
+
     }
 
     @Override

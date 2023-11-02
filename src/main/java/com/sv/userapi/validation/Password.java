@@ -1,4 +1,4 @@
-package com.sv.userapi.domain.validation;
+package com.sv.userapi.validation;
 
 import jakarta.validation.Constraint;
 import jakarta.validation.Payload;
@@ -10,7 +10,7 @@ import java.lang.annotation.Target;
 import static java.lang.annotation.ElementType.*;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
-@Target({FIELD, METHOD, PARAMETER, ANNOTATION_TYPE})
+@Target({FIELD, METHOD, PARAMETER   })
 @Retention(RUNTIME)
 @Constraint(validatedBy = PasswordValidator.class)
 @Documented

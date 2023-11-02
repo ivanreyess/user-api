@@ -1,6 +1,5 @@
 package com.sv.userapi.controller.v1;
 
-import com.sv.userapi.repository.UserRepository;
 import com.sv.userapi.service.UserService;
 import com.sv.userapi.domain.dto.UserDTO;
 import com.sv.userapi.util.HeaderUtil;
@@ -40,11 +39,9 @@ public class UserController {
 
     private final UserService userService;
 
-    private final UserRepository userRepository;
 
-    public UserController(UserService userService, UserRepository userRepository) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.userRepository = userRepository;
     }
 
     /**

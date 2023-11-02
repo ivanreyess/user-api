@@ -97,6 +97,7 @@ class PhoneControllerTest {
                                 .build();
 
         given(phoneService.save(any())).willReturn(phoneDTO);
+
         restPhoneMockMvc
                 .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(phoneDTO1)))
                 .andExpect(status().isCreated())
